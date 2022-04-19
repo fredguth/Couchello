@@ -1,0 +1,104 @@
+generator jsonSchema {
+  provider = "prisma-json-schema-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id            String     @id
+  phone         String     @unique
+  phoneVerified DateTime?
+  name          String?
+  image         String?
+  role          PersonRole @default(CONTACT)
+  createdAt     DateTime?  @default(now())
+  deletedAt     DateTime?
+  updatedAt     DateTime?  @updatedAt
+  issues        Issue[]    @relation("report")
+  user          User?
+  userId        String
+}
+
+enum PersonRole {
+  CONTACT
+  CLIENT
+  PATIENT
+  DOCTOR
+  MEMBER
+  USER
+}
+
+model User {
+  id                   String         @id
+  person               Person        @relation(fields: [personId], references: [id])
+  personId             String
+  membership           Member[]       @relation("membership")
+  invitedMembers       Member[]       @relation("inviter")
+  issues               Issue[]        @relation("assignment")
+  createdOrganizations Organization[]
+
+}
+
+model Organization {
+  id         String    @id
+  domain     String    @unique
+  inviteCode String    @unique
+  creatorId  String
+  name       String?
+  createdAt  DateTime? @default(now())
+  deletedAt  DateTime?
+  updatedAt  DateTime? @updatedAt
+
+  creator User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  members Member[]
+
+  @@unique([domain, inviteCode])
+}
+
+model Member {
+
+  UserId         String
+  OrganizationId String
+  inviter        String
+  invitedAt      DateTime? @default(now())
+  joinedAt       DateTime?
+  deletedAt      DateTime?
+  updatedAt      DateTime? @updatedAt
+
+  status   InvitationStatus @default(PENDING)
+  teamRole TeamRole         @default(MEMBER)
+
+  member       User         @relation(fields: [UserId], references: [id], name: "membership")
+  organization Organization @relation(fields: [OrganizationId], references: [id])
+  invitedBy    User?        @relation(fields: [inviter], references: [id], name: "inviter")
+
+
+  @@id([OrganizationId, UserId])
+}
+
+enum InvitationStatus {
+  ACCEPTED
+  PENDING
+  DECLINED
+}
+
+enum TeamRole {
+  MEMBER
+  OWNER
+}
+
+model Issue {
+  id         String @id
+  assigneeId String
+  assignee   User?  @relation("assignment", fields: [assigneeId], references: [id])
+  reporterId String
+  reporter   Person @relation("report", fields: [reporterId], references: [id])
+}
+
+model Flow {
+  id String @id
+
+}
