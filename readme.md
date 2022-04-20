@@ -6,7 +6,7 @@ A template project to demonstrate CouchDB best practices and potential.
 
 Couchello is a Trello clone. 
 
-## Requirements
+## Application Requirements
 
 * As a user I want to keep track of cards (issues) in different boards (workflows)
 * As a user I want to be able to work offline
@@ -14,3 +14,25 @@ Couchello is a Trello clone.
 * As a user I must not be able to see a worflow of which I am not a member
 * As a user I want to be able to change the status (current state) of an issue. In other words, as a user I want to move issues from a state to another state
 * A workflow has many states (board columns), each with many issues
+
+
+## Development Requirements
+* offline first
+* translucent database: all documents in the database must be encrypted/decrypted on the client side
+* explicit schema definition with json-schema validation
+* automated devops using couchdb bootstrap, pouchdb-migrate
+
+
+## Current Status
+* using prisma to generate a json-schema definition from a prisma schema file
+* schema file in prisma/schema.prisma
+* json-schema generated automatically in prisma/json-schema/json-schema.json
+
+
+# Installing
+```
+npm i
+npm i -g prisma
+mv .sample.env .env  
+prisma generate
+```
