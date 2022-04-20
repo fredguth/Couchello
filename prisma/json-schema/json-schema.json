@@ -34,10 +34,6 @@
           "default": "CONTACT",
           "enum": [
             "CONTACT",
-            "CLIENT",
-            "PATIENT",
-            "DOCTOR",
-            "MEMBER",
             "USER"
           ]
         },
@@ -69,19 +65,23 @@
           }
         },
         "user": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/User"
-          }
+          "anyOf": [
+            {
+              "$ref": "#/definitions/User"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "userId": {
+          "type": "string"
         }
       }
     },
     "User": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "person": {
           "$ref": "#/definitions/Person"
         },
@@ -158,12 +158,36 @@
           "items": {
             "$ref": "#/definitions/Member"
           }
+        },
+        "flows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Flow"
+          }
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
         }
       }
     },
     "Member": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "member": {
+          "$ref": "#/definitions/User"
+        },
+        "organization": {
+          "$ref": "#/definitions/Organization"
+        },
         "invitedAt": {
           "type": [
             "string",
@@ -209,12 +233,6 @@
             "OWNER"
           ]
         },
-        "member": {
-          "$ref": "#/definitions/User"
-        },
-        "organization": {
-          "$ref": "#/definitions/Organization"
-        },
         "invitedBy": {
           "anyOf": [
             {
@@ -224,6 +242,12 @@
               "type": "null"
             }
           ]
+        },
+        "flows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MembersOnFlows"
+          }
         }
       }
     },
@@ -245,6 +269,73 @@
         },
         "reporter": {
           "$ref": "#/definitions/Person"
+        },
+        "organization": {
+          "$ref": "#/definitions/Organization"
+        },
+        "currentState": {
+          "$ref": "#/definitions/State"
+        }
+      }
+    },
+    "Flow": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "organization": {
+          "$ref": "#/definitions/Organization"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MembersOnFlows"
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/State"
+          }
+        }
+      }
+    },
+    "MembersOnFlows": {
+      "type": "object",
+      "properties": {
+        "flow": {
+          "$ref": "#/definitions/Flow"
+        },
+        "member": {
+          "$ref": "#/definitions/Member"
+        },
+        "assignedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "assignedBy": {
+          "type": "string"
+        }
+      }
+    },
+    "State": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "flow": {
+          "$ref": "#/definitions/Flow"
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
         }
       }
     }
@@ -265,6 +356,15 @@
     },
     "issue": {
       "$ref": "#/definitions/Issue"
+    },
+    "flow": {
+      "$ref": "#/definitions/Flow"
+    },
+    "membersOnFlows": {
+      "$ref": "#/definitions/MembersOnFlows"
+    },
+    "state": {
+      "$ref": "#/definitions/State"
     }
   }
 }
