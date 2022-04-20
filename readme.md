@@ -29,10 +29,16 @@ Couchello is a Trello clone.
 * json-schema generated automatically in prisma/json-schema/json-schema.json
 
 
+# Tooling
+```
+npm i -g https://github.com/jo/couchdb-bootstrap
+npm i -g prisma
+```
+
 # Installing
 ```
+mv .sample.env .env
 npm i
-npm i -g prisma
-mv .sample.env .env  
 prisma generate
+ couchdb-bootstrap http://admin:{password}@localhost:5984 ./couchdb
 ```
