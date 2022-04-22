@@ -14,7 +14,7 @@ Couchello is a Trello clone.
 * As a user I must not be able to see a worflow of which I am not a member
 * As a user I want to be able to change the status (current state) of an issue. In other words, as a user I want to move issues from a state to another state
 * A workflow has many states (board columns), each with many issues
-
+* As a admin I want to be able to move the organization data to another database so that I am not locked in by the app developer (BYODB: Bring Your Own DB)
 
 ## Development Requirements
 * offline first

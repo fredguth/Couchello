@@ -8,18 +8,18 @@ datasource db {
 }
 
 model Person {
-  id            String     @id
-  phone         String     @unique
-  phoneVerified DateTime?
-  name          String?
-  image         String?
-  role          PersonRole @default(CONTACT)
-  createdAt     DateTime?  @default(now())
-  deletedAt     DateTime?
-  updatedAt     DateTime?  @updatedAt
-  issues        Issue[]    @relation("report")
-  user          User?
-  userId        String
+  id             String     @id
+  phone          String     @unique
+  phoneVerified  DateTime?
+  name           String?
+  image          String?
+  role           PersonRole @default(CONTACT)
+  createdAt      DateTime?  @default(now())
+  deletedAt      DateTime?
+  updatedAt      DateTime?  @updatedAt
+  reportedIssues Issue[]    @relation("report")
+  user           User?
+  userId         String
 }
 
 enum PersonRole {
@@ -54,8 +54,8 @@ model Organization {
 }
 
 model Member {
-  id String @unique
-  alias String @unique
+  id             String       @unique
+  alias          String       @unique
   UserId         String
   OrganizationId String
   member         User         @relation(fields: [UserId], references: [id], name: "membership")
@@ -85,16 +85,17 @@ enum TeamRole {
 }
 
 model Issue {
-  id         String @unique
-  assigneeId String
-  assignee   User?  @relation("assignment", fields: [assigneeId], references: [id])
-  reporterId String
-  reporter   Person @relation("report", fields: [reporterId], references: [id])
-  organization   Organization     @relation(fields: [organizationId], references: [id])
+  id             String       @unique
+  assigneeId     String
+  assignee       User?        @relation("assignment", fields: [assigneeId], references: [id])
+  reporterId     String
+  reporter       Person       @relation("report", fields: [reporterId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String
-  @@id([organizationId, id])
-  currentState State  @relation(fields: [currentStateId], references: [id])
+  currentState   State        @relation(fields: [currentStateId], references: [id])
   currentStateId String
+
+  @@id([organizationId, id])
 }
 
 model Flow {
@@ -102,8 +103,9 @@ model Flow {
   organization   Organization     @relation(fields: [organizationId], references: [id])
   organizationId String
   members        MembersOnFlows[]
+  states         State[]
+
   @@id([organizationId, id])
-  states State[]
 }
 
 model MembersOnFlows {
@@ -117,12 +119,13 @@ model MembersOnFlows {
   @@id([flowId, memberId])
 }
 
-model State{
-  id String @unique
-  name String
+model State {
+  id     String  @unique
+  name   String
   flowId String
-  flow Flow @relation(fields: [flowId], references: [id])
+  flow   Flow    @relation(fields: [flowId], references: [id])
   issues Issue[]
+
   @@id([flowId, id])
 }
 

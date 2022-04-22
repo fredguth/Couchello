@@ -1,0 +1,167 @@
+const { networkInterfaces } = require("os");
+
+const validate_doc_update = function (newDoc, oldDoc, userCtx, secObj) {
+  if (userCtx.roles.indexOf("_admin") === -1) {
+    throw {
+      forbidden: "Admins only.",
+    };
+  }
+};
+
+const byDate = function (doc) {
+  if ("date" in doc) {
+    emit(doc.date, null);
+  }
+};
+
+module.exports = {
+    "_config": {},
+    "couchello_db": {
+        "_design": {},
+        "_local": {},
+        "_security": {
+            "members": {
+                "roles": [],
+                "names": [
+                    "35eac3e8da",
+                    "5e521c9677",
+                    "063b0d4817",
+                    "c726fc5220"
+                ]
+            },
+            "admins": {
+                "roles": [],
+                "names": [
+                    "4c7bb7b5ce",
+                    "9b21c9fa90",
+                    "d5187696a9",
+                    "bad951d860",
+                    "817569fcb8",
+                    "5c092bc088"
+                ]
+            }
+        }
+    },
+    "_users": {
+        "org.couchdb.user:35eac3e8da": {
+            "_id": "org.couchdb.user:35eac3e8da",
+            "type": "user",
+            "password": "35eac3e8da",
+            "roles": [
+                "Member"
+            ],
+            "alias": "David Thompson",
+            "name": "35eac3e8da"
+        },
+        "org.couchdb.user:4c7bb7b5ce": {
+            "_id": "org.couchdb.user:4c7bb7b5ce",
+            "type": "user",
+            "password": "4c7bb7b5ce",
+            "roles": [
+                "Admin"
+            ],
+            "alias": "Jason Kelly",
+            "name": "4c7bb7b5ce"
+        },
+        "org.couchdb.user:5e521c9677": {
+            "_id": "org.couchdb.user:5e521c9677",
+            "type": "user",
+            "password": "5e521c9677",
+            "roles": [
+                "Member"
+            ],
+            "alias": "Seth Phillips",
+            "name": "5e521c9677"
+        },
+        "org.couchdb.user:9b21c9fa90": {
+            "_id": "org.couchdb.user:9b21c9fa90",
+            "type": "user",
+            "password": "9b21c9fa90",
+            "roles": [
+                "Admin"
+            ],
+            "alias": "Leah Pugh",
+            "name": "9b21c9fa90"
+        },
+        "org.couchdb.user:063b0d4817": {
+            "_id": "org.couchdb.user:063b0d4817",
+            "type": "user",
+            "password": "063b0d4817",
+            "roles": [
+                "Member"
+            ],
+            "alias": "Brandi Gonzales",
+            "name": "063b0d4817"
+        },
+        "org.couchdb.user:c726fc5220": {
+            "_id": "org.couchdb.user:c726fc5220",
+            "type": "user",
+            "password": "c726fc5220",
+            "roles": [
+                "Member"
+            ],
+            "alias": "Shane Day",
+            "name": "c726fc5220"
+        },
+        "org.couchdb.user:d5187696a9": {
+            "_id": "org.couchdb.user:d5187696a9",
+            "type": "user",
+            "password": "d5187696a9",
+            "roles": [
+                "Admin"
+            ],
+            "alias": "Mathew Robinson",
+            "name": "d5187696a9"
+        },
+        "org.couchdb.user:bad951d860": {
+            "_id": "org.couchdb.user:bad951d860",
+            "type": "user",
+            "password": "bad951d860",
+            "roles": [
+                "Admin"
+            ],
+            "alias": "Mark Bailey",
+            "name": "bad951d860"
+        },
+        "org.couchdb.user:817569fcb8": {
+            "_id": "org.couchdb.user:817569fcb8",
+            "type": "user",
+            "password": "817569fcb8",
+            "roles": [
+                "Admin"
+            ],
+            "alias": "Jon Daniels",
+            "name": "817569fcb8"
+        },
+        "org.couchdb.user:5c092bc088": {
+            "_id": "org.couchdb.user:5c092bc088",
+            "type": "user",
+            "password": "5c092bc088",
+            "roles": [
+                "Admin"
+            ],
+            "alias": "Leslie Morris",
+            "name": "5c092bc088"
+        }
+    },
+    "organizations": {
+        "id": {
+            "_id": "b9300e7d0f",
+            "type": "organization",
+            "name": "Stephens-Martinezand Sons",
+            "db": "org_b9300e7d0f_db",
+            "members": [
+                "35eac3e8da",
+                "4c7bb7b5ce",
+                "5e521c9677",
+                "9b21c9fa90",
+                "063b0d4817",
+                "c726fc5220",
+                "d5187696a9",
+                "bad951d860",
+                "817569fcb8",
+                "5c092bc088"
+            ]
+        }
+    }
+};

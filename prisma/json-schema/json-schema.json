@@ -5,7 +5,8 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "model that comprises all the atributes of a natural person in different roles"
         },
         "phone": {
           "type": "string"
